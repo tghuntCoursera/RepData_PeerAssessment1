@@ -67,7 +67,7 @@
   theme(axis.text.x=element_text(angle=90)) + 
   scale_x_discrete(breaks=meanStepsInterval$interval[seq(1,nrow(meanStepsInterval),10)]) + 
   scale_colour_manual(name="Legend",values=cols, labels=c("Mean steps/Interval", "Median steps/Interval")) + 
-  ylab('Mean and Median steps')
+  ylab('Mean and Median steps') + xlab('interval')
   print(msi)
 ```
 
@@ -212,7 +212,7 @@ sc2 <- ggplot(meanStepsDay2, aes(x=date, y=MEDSD)) +
   theme(axis.text.x=element_text(angle=90)) + 
   scale_x_discrete(breaks=meanStepsDayType$interval[seq(1,nrow(meanStepsDayType)/2,10)]) + 
   scale_color_manual(name="Legend",values=c("ModMean"="purple", "Mean"="red", "ModMedian"="navyblue", "Median"="blue"), labels=c( "Mean steps/day", "Median steps/day", "Modified Mean steps/day", "Modified Median steps/day")) + 
-  ylab('Mean and Median steps') + facet_wrap(~dayType, ncol=1)
+  ylab('Mean steps') + facet_wrap(~dayType, ncol=1)
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-13-1.png) 
