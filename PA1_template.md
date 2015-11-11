@@ -39,7 +39,7 @@
 * The following is a historgram of the total number of steps each day (excluding NA's)
 
 ```r
-  h1 <- ggplot(totalStepsDay, aes(x=TSD)) + geom_histogram(aes(fill=..count..), binwidth=1000) + xlab('Total steps per day')
+  h1 <- ggplot(totalStepsDay, aes(x=TSD)) + geom_histogram(aes(fill=..count..), binwidth=1000) + xlab('Total steps per day')  + ggtitle("Total steps each day (excluding NA's)")
   print(h1)
 ```
 
@@ -50,7 +50,7 @@
 
 ```r
   cols <- c("Mean"="red","Median"="blue")
-  msd <- ggplot(meanStepsDay, aes(x=date, y=MSD, colour="Mean"), na.rm=TRUE, group=1) + geom_point(na.rm=TRUE) + geom_point(data=meanStepsDay, aes(y=MEDSD, colour="Median"), na.rm=TRUE, group=1) + theme(axis.text.x=element_text(angle=90)) + scale_x_discrete(breaks=meanStepsDay$date[seq(1,nrow(meanStepsDay),2)]) + scale_colour_manual(name="Legend",values=cols, labels=c("Mean steps/day", "Median steps/day")) + ylab('Mean and Median steps')
+  msd <- ggplot(meanStepsDay, aes(x=date, y=MSD, colour="Mean"), na.rm=TRUE, group=1) + geom_point(na.rm=TRUE) + geom_point(data=meanStepsDay, aes(y=MEDSD, colour="Median"), na.rm=TRUE, group=1) + theme(axis.text.x=element_text(angle=90)) + scale_x_discrete(breaks=meanStepsDay$date[seq(1,nrow(meanStepsDay),2)]) + scale_colour_manual(name="Legend",values=cols, labels=c("Mean steps/day", "Median steps/day")) + ylab('Mean and Median steps') + ggtitle("Mean and median number of steps each day (excluding NA's)")
   print(msd)
 ```
 
@@ -67,7 +67,7 @@
   theme(axis.text.x=element_text(angle=90)) + 
   scale_x_discrete(breaks=meanStepsInterval$interval[seq(1,nrow(meanStepsInterval),10)]) + 
   scale_colour_manual(name="Legend",values=cols, labels=c("Mean steps/Interval", "Median steps/Interval")) + 
-  ylab('Mean and Median steps') + xlab('interval')
+  ylab('Mean and Median steps') + xlab('interval')  + ggtitle("Mean and median number of steps per interval (excluding NA's)")
   print(msi)
 ```
 
@@ -81,7 +81,7 @@
   pVal <- quantile( meanStepsInterval$MSI, probs=c(0.95))
   meanStepsIntervalGt95p <- subset(meanStepsInterval, MSI > pVal)
   meanStepsIntervalGt95p$interval <- as.factor(meanStepsIntervalGt95p$interval)
-  ggplot(meanStepsIntervalGt95p, aes(x=interval, y=MSI, colour="Mean", group=1), na.rm=TRUE) + geom_point() + geom_point(data=meanStepsIntervalGt95p, aes(y=MEDSI, colour="Median"), na.rm=TRUE, group=1) + theme(axis.text.x=element_text(angle=90)) + scale_colour_manual(name="Legend",values=cols, labels=c("Mean steps/Interval", "Median steps/Interval")) + ylab('Mean and Median steps')
+  ggplot(meanStepsIntervalGt95p, aes(x=interval, y=MSI, colour="Mean", group=1), na.rm=TRUE) + geom_point() + geom_point(data=meanStepsIntervalGt95p, aes(y=MEDSI, colour="Median"), na.rm=TRUE, group=1) + theme(axis.text.x=element_text(angle=90)) + scale_colour_manual(name="Legend",values=cols, labels=c("Mean steps/Interval", "Median steps/Interval")) + ylab('Mean and Median steps') + ggtitle("Mean and median number of steps per interval (excluding NA's)")
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
@@ -129,7 +129,7 @@ nrow(data[is.na(data$steps),])
 * The following is a historgram of the total number of steps per day, using the updated data table
 
 ```r
-  h2 <- ggplot(totalStepsDay2, aes(x=TSD)) + geom_histogram(aes(fill=..count..), binwidth=1000) + xlab('Total steps per day')
+  h2 <- ggplot(totalStepsDay2, aes(x=TSD)) + geom_histogram(aes(fill=..count..), binwidth=1000) + xlab('Total steps per day') + ggtitle("Total number of steps each day (imputed data)")
   print(h2)
 ```
 
@@ -146,8 +146,7 @@ nrow(data[is.na(data$steps),])
   geom_line(data=meanStepsDay2, aes(x=date, y=MEDSD, colour="ModMedian", group=3)) + 
   theme(axis.text.x=element_text(angle=90)) + 
   scale_x_discrete(breaks=meanStepsDay2$date[seq(1,nrow(meanStepsDay2),2)]) + 
-  scale_color_manual(name="Legend",values=c("ModMean"="purple", "Mean"="red", "ModMedian"="navyblue", "Median"="blue"), labels=c( "Mean steps/day", "Median steps/day", "Modified Mean steps/day", "Modified Median steps/day")) + 
-  ylab('Mean and Median steps')
+  scale_color_manual(name="Legend",values=c("ModMean"="purple", "Mean"="red", "ModMedian"="navyblue", "Median"="blue"), labels=c( "Mean steps/day", "Median steps/day", "Modified Mean steps/day", "Modified Median steps/day")) + ylab('Mean and Median steps') + ggtitle("Mean and median number of steps each day (imputed data)")
 
   print(msd2)
 ```
@@ -165,8 +164,7 @@ sc1 <- ggplot(meanStepsDay2, aes(x=date, y=MSD)) +
   geom_line(data=meanStepsDay, aes(x=date, y=MSD, colour="Mean", group=3)) + 
   theme(axis.text.x=element_text(angle=90)) + 
   scale_x_discrete(breaks=meanStepsDay2$date[seq(1,nrow(meanStepsDay2),2)]) + 
-  scale_color_manual(name="Legend",values=c("ModMean"="purple", "Mean"="red"), labels=c( "Mean steps/day", "Modified Mean steps/day")) + 
-  ylab('Mean steps')
+  scale_color_manual(name="Legend",values=c("ModMean"="purple", "Mean"="red"), labels=c( "Mean steps/day", "Modified Mean steps/day")) + ylab('Mean steps') + ggtitle("Mean number of steps for each interval\n (original vs imputed data)")
   
   suppressWarnings(print(sc1))
 ```
@@ -184,7 +182,7 @@ sc2 <- ggplot(meanStepsDay2, aes(x=date, y=MEDSD)) +
   geom_line(data=meanStepsDay, aes(x=date, y=MEDSD, colour="Mean", group=3)) + 
   theme(axis.text.x=element_text(angle=90)) + 
   scale_x_discrete(breaks=meanStepsDay2$date[seq(1,nrow(meanStepsDay2),2)]) + 
-  scale_color_manual(name="Legend",values=c("ModMean"="purple", "Mean"="red"), labels=c( "Median steps/day", "Modified Median steps/day")) + ylab('Median steps')
+  scale_color_manual(name="Legend",values=c("ModMean"="purple", "Mean"="red"), labels=c( "Median steps/day", "Modified Median steps/day")) + ylab('Median steps') + ggtitle("Median number of steps for each interval\n (original vs imputed data)")
   
   suppressWarnings(print(sc2))
 ```
@@ -212,7 +210,7 @@ sc2 <- ggplot(meanStepsDay2, aes(x=date, y=MEDSD)) +
   theme(axis.text.x=element_text(angle=90)) + 
   scale_x_discrete(breaks=meanStepsDayType$interval[seq(1,nrow(meanStepsDayType)/2,10)]) + 
   scale_color_manual(name="Legend",values=c("ModMean"="purple", "Mean"="red", "ModMedian"="navyblue", "Median"="blue"), labels=c( "Mean steps/day", "Median steps/day", "Modified Mean steps/day", "Modified Median steps/day")) + 
-  ylab('Mean steps') + facet_wrap(~dayType, ncol=1)
+  ylab('Mean steps') + facet_wrap(~dayType, ncol=1) + ggtitle("Mean number of steps for each interval by day type (imputed data)")
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-13-1.png) 
